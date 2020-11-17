@@ -31,6 +31,10 @@ export default async (_req: NowRequest, res: NowResponse) => {
     address = "0x0F9399FC81DaC77908A2Dde54Bb87Ee2D17a3373",
     pid = "1",
   } = _req.query;
-  const data = await pending(Number(pid), address as string);
-  res.status(200).send(data);
+  if (Array.isArray(pid)) {
+    res.status(400).send({ error: "Parameter Incorrect" });
+  } else {
+    const data = await pending(Number(pid), address as string);
+    res.status(200).send(data);
+  }
 };
