@@ -1,8 +1,11 @@
+import Web3 from "web3";
+import { BatchRequest } from "web3-core";
+
 import { getWeb3 } from "./eth";
 
 export class PromisifyBatchRequest<R> {
-  web3;
-  batch;
+  web3: Web3;
+  batch: BatchRequest;
   requests: Array<Promise<R>> = [];
   constructor() {
     this.web3 = getWeb3();
