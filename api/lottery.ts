@@ -1,7 +1,7 @@
 import { NowRequest, NowResponse, NowRequestQuery } from "@vercel/node";
 import { getContract } from "../lib/contract";
 import { PromisifyBatchRequest } from "../lib/PromiseBatchRequest";
-
+const lotteryABI = require("../contracts/lottery");
 interface SingleLotteryReturn {
   numbers1: Promise<[string, string, string, string]>;
   numbers2: Promise<[string, string, string, string]>;
@@ -22,7 +22,10 @@ interface Lottery {
  * @param index
  */
 const getSingleLotteryBatch = (index: number): SingleLotteryReturn => {
-  const lotteryContract = getContract();
+  const lotteryContract = getContract(
+    lotteryABI,
+    "0x3C3f2049cc17C136a604bE23cF7E42745edf3b91"
+  );
   const batch = new PromisifyBatchRequest<string>();
   const batch2 = new PromisifyBatchRequest<string>();
   [
@@ -52,7 +55,10 @@ const getSingleLotteryBatch = (index: number): SingleLotteryReturn => {
  * @param index
  */
 const getSingleLottery = (index: number): SingleLotteryReturn => {
-  const lotteryContract = getContract();
+  const lotteryContract = getContract(
+    lotteryABI,
+    "0x3C3f2049cc17C136a604bE23cF7E42745edf3b91"
+  );
 
   const numbers1 = Promise.all([
     lotteryContract.methods.historyNumbers(index, 0).call(),
@@ -138,7 +144,10 @@ export const lottery = async (
   error?: string;
   errorMessage?: string;
 }> => {
-  const lotteryContract = getContract();
+  const lotteryContract = getContract(
+    lotteryABI,
+    "0x3C3f2049cc17C136a604bE23cF7E42745edf3b91"
+  );
   let issueIndex: number | undefined = undefined;
   let retryIsseIndex = 0;
   while (typeof issueIndex === "undefined" && retryIsseIndex <= 3) {

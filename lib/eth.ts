@@ -1,6 +1,6 @@
 import Web3 from "web3";
 import { getProvider } from "./provider";
-import { HttpProvider as Web3HttpProvider } from "web3-providers-http";
+import { HttpProvider as Web3HttpProvider } from "web3-core";
 
 let web3: Web3 | undefined;
 

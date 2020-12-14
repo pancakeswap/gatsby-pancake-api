@@ -1,6 +1,6 @@
 import { NowRequest, NowResponse } from "@vercel/node";
-import Web3 from "web3";
 import BigNumber from "bignumber.js";
+import { getContract } from "../lib/contract";
 
 const chefABI = require("../contracts/chef");
 
@@ -9,12 +9,8 @@ const getBalanceNumber = (balance: any, decimals = 18) => {
   return displayBalance.toNumber();
 };
 
-const web3 = new Web3(
-  new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org")
-);
-
 const pending = async (pid: number, address: string) => {
-  const chef = new web3.eth.Contract(
+  const chef = getContract(
     chefABI,
     "0x73feaa1eE314F8c655E354234017bE2193C9E24E"
   );
