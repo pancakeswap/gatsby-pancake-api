@@ -1,4 +1,4 @@
-import { NowRequestBody, NowRequestCookies, NowRequestQuery } from "@now/node";
+import { NowRequestBody, NowRequestCookies, NowRequestQuery } from "@vercel/node";
 import Web3 from "web3";
 
 import * as singleLottery from "../api/singleLottery";
