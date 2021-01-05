@@ -24,7 +24,7 @@
   "scripts": {
     "dev": "gatsby develop",
     "build": "gatsby build",
-    "test": "jest --watch",
-    "coverage": "jest --coverage"
+    "test": "jest",
+    "test:coverage": "jest --coverage"
   }
 }
