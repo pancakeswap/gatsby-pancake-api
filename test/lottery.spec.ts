@@ -1,19 +1,14 @@
-import { NowRequestBody, NowRequestCookies, NowRequestQuery } from "@now/node";
 import Web3 from "web3";
 import * as lottery from "../api/lottery";
+
 const lotteryABI = require("../contracts/lottery");
 
 describe("Lottery Function", () => {
   let maxLotteries: number;
   beforeAll(async () => {
-    const web3 = new Web3(
-      new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org")
-    );
+    const web3 = new Web3(new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org"));
 
-    const lotteryContract = new web3.eth.Contract(
-      lotteryABI,
-      "0x3C3f2049cc17C136a604bE23cF7E42745edf3b91"
-    );
+    const lotteryContract = new web3.eth.Contract(lotteryABI, "0x3C3f2049cc17C136a604bE23cF7E42745edf3b91");
 
     maxLotteries = Number(await lotteryContract.methods.issueIndex().call());
   });
@@ -52,14 +47,9 @@ describe("Lottery Function", () => {
 describe("Lottery Handler", () => {
   let maxLotteries: number;
   beforeAll(async () => {
-    const web3 = new Web3(
-      new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org")
-    );
+    const web3 = new Web3(new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org"));
 
-    const lotteryContract = new web3.eth.Contract(
-      lotteryABI,
-      "0x3C3f2049cc17C136a604bE23cF7E42745edf3b91"
-    );
+    const lotteryContract = new web3.eth.Contract(lotteryABI, "0x3C3f2049cc17C136a604bE23cF7E42745edf3b91");
 
     maxLotteries = Number(await lotteryContract.methods.issueIndex().call());
   });
