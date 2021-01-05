@@ -1,4 +1,3 @@
-import { NowRequestBody, NowRequestCookies, NowRequestQuery } from "@now/node";
 import Web3 from "web3";
 import * as lottery from "../api/lottery";
 const lotteryABI = require("../contracts/lottery");
