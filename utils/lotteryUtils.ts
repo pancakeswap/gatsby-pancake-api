@@ -1,6 +1,7 @@
 import { PromisifyBatchRequest } from "../lib/PromiseBatchRequest";
 import { getContract } from "../lib/contract";
 import { rates, ratesOld } from "./lotteryRates";
+
 const lotteryABI = require("../contracts/lottery");
 
 export interface SingleLotteryReturn {
@@ -45,10 +46,7 @@ export interface LotteryHistory {
  * @param index
  */
 export const getSingleLotteryBatch = (index: number): SingleLotteryReturn => {
-  const lotteryContract = getContract(
-    lotteryABI,
-    "0x3C3f2049cc17C136a604bE23cF7E42745edf3b91"
-  );
+  const lotteryContract = getContract(lotteryABI, "0x3C3f2049cc17C136a604bE23cF7E42745edf3b91");
   const batch = new PromisifyBatchRequest<string>();
   const batch2 = new PromisifyBatchRequest<string>();
   [
@@ -96,13 +94,8 @@ const createLotteryItem = async (
   });
 };
 
-export const getIssueIndex = async (): Promise<
-  number | { error: string; errorMessage: string }
-> => {
-  const lotteryContract = getContract(
-    lotteryABI,
-    "0x3C3f2049cc17C136a604bE23cF7E42745edf3b91"
-  );
+export const getIssueIndex = async (): Promise<number | { error: string; errorMessage: string }> => {
+  const lotteryContract = getContract(lotteryABI, "0x3C3f2049cc17C136a604bE23cF7E42745edf3b91");
   let issueIndex: number | undefined = undefined;
   let retryIsseIndex = 0;
   while (typeof issueIndex === "undefined" && retryIsseIndex <= 3) {
@@ -126,9 +119,7 @@ export const getRates = (lotteryNumber: number) => {
   return ratesToUse;
 };
 
-export const getAllLotteries = (
-  issueIndex: number
-): Promise<Array<Lottery>> => {
+export const getAllLotteries = (issueIndex: number): Promise<Array<Lottery>> => {
   const finalNumbersProm: Array<SingleLotteryReturn> = [];
   for (let i = issueIndex - 1; i >= 0; i--) {
     finalNumbersProm.push(getSingleLotteryBatch(i));
@@ -143,20 +134,13 @@ export const getAllLotteries = (
  * @param finalNumbers
  * @param retries number of retries
  */
-const retry = async (
-  index: number,
-  finalNumbers: Array<Lottery>,
-  retries: number
-) => {
+const retry = async (index: number, finalNumbers: Array<Lottery>, retries: number) => {
   let retrySuccess = false;
   let retryCount = 0;
   while (!retrySuccess && retryCount !== retries) {
     retryCount++;
     try {
-      const {
-        numbers1: numbers1Prom,
-        numbers2: numbers2Prom,
-      } = getSingleLotteryBatch(index);
+      const { numbers1: numbers1Prom, numbers2: numbers2Prom } = getSingleLotteryBatch(index);
       await createLotteryItem(numbers1Prom, numbers2Prom, index, finalNumbers);
       retrySuccess = true;
     } catch (err) {
@@ -166,24 +150,13 @@ const retry = async (
   }
 };
 
-export const computeLotteries = async (
-  finalNumbersProm: Array<SingleLotteryReturn>
-): Promise<Array<Lottery>> => {
+export const computeLotteries = async (finalNumbersProm: Array<SingleLotteryReturn>): Promise<Array<Lottery>> => {
   const finalNumbers: Array<Lottery> = [];
   try {
     for (let i = 0; i < finalNumbersProm.length; i++) {
-      const {
-        numbers1: numbers1Prom,
-        numbers2: numbers2Prom,
-        index,
-      } = finalNumbersProm[i];
+      const { numbers1: numbers1Prom, numbers2: numbers2Prom, index } = finalNumbersProm[i];
       try {
-        await createLotteryItem(
-          numbers1Prom,
-          numbers2Prom,
-          index,
-          finalNumbers
-        );
+        await createLotteryItem(numbers1Prom, numbers2Prom, index, finalNumbers);
       } catch (error) {
         await retry(index, finalNumbers, 3);
       }

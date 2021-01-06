@@ -1,9 +1,5 @@
-import { NowRequestBody, NowRequestCookies, NowRequestQuery } from "@vercel/node";
-import Web3 from "web3";
-
 import * as singleLottery from "../api/singleLottery";
 import { SingleLottery } from "../utils/lotteryUtils";
-const lotteryABI = require("../contracts/lottery");
 
 function instanceOfSingleLottery(object: any): object is SingleLottery {
   return "match2Ticket" in object;
@@ -21,9 +17,7 @@ describe("Lottery Function", () => {
       expect(lotteryResponse.poolMatch2).toBe(15189.43);
       expect(lotteryResponse.burned).toBe(30378.85);
       expect(lotteryResponse.poolSize).toBe(151894.22);
-      expect(lotteryResponse.lotteryDate.toUTCString()).toBe(
-        new Date("2020-12-14T14:00:00.000Z").toUTCString()
-      );
+      expect(lotteryResponse.lotteryDate.toUTCString()).toBe(new Date("2020-12-14T14:00:00.000Z").toUTCString());
     } else {
       throw new Error("no error expected");
     }
@@ -39,9 +33,7 @@ describe("Lottery Function", () => {
       expect(lotteryResponse.poolMatch2).toBe(6372.62);
       expect(lotteryResponse.burned).toBe(6372.62);
       expect(lotteryResponse.poolSize).toBe(63726.2);
-      expect(lotteryResponse.lotteryDate.toUTCString()).toBe(
-        new Date("2020-12-04T08:00:00.000Z").toUTCString()
-      );
+      expect(lotteryResponse.lotteryDate.toUTCString()).toBe(new Date("2020-12-04T08:00:00.000Z").toUTCString());
     } else {
       throw new Error("no error expected");
     }

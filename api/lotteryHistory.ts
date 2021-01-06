@@ -1,10 +1,5 @@
 import { NowRequest, NowResponse } from "@vercel/node";
-import {
-  getAllLotteries,
-  getIssueIndex,
-  getRates,
-  LotteryHistory,
-} from "../utils/lotteryUtils";
+import { getAllLotteries, getIssueIndex, getRates, LotteryHistory } from "../utils/lotteryUtils";
 import { ceilDecimal } from "../utils/mathUtils";
 
 export const lotteryHistory = async (): Promise<
@@ -25,10 +20,7 @@ export const lotteryHistory = async (): Promise<
       return {
         lotteryNumber: x.issueIndex,
         poolSize: ceilDecimal(x.numbers2[0], 2),
-        burned: ceilDecimal(
-          (x.numbers2[0] / 100) * getRates(x.issueIndex).burn,
-          2
-        ),
+        burned: ceilDecimal((x.numbers2[0] / 100) * getRates(x.issueIndex).burn, 2),
       };
     }
   );

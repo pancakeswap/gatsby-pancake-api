@@ -1,13 +1,7 @@
 import { NowRequest, NowResponse } from "@vercel/node";
-import { getContract } from "../lib/contract";
-
 import { generateLotteryDate } from "../utils/generateLotteryDate";
 import { rates, ratesOld } from "../utils/lotteryRates";
-import {
-  getIssueIndex,
-  getSingleLotteryBatch,
-  SingleLottery,
-} from "../utils/lotteryUtils";
+import { getIssueIndex, getSingleLotteryBatch, SingleLottery } from "../utils/lotteryUtils";
 import { ceilDecimal } from "../utils/mathUtils";
 
 export const lottery = async (
@@ -32,10 +26,7 @@ export const lottery = async (
       maxLotteryNumber: issueIndex - 1,
     };
   }
-  const {
-    numbers1: numbers1Prom,
-    numbers2: numbers2Prom,
-  } = getSingleLotteryBatch(lotteryNumber);
+  const { numbers1: numbers1Prom, numbers2: numbers2Prom } = getSingleLotteryBatch(lotteryNumber);
   const numbers1 = await numbers1Prom;
   const numbers2Res = await numbers2Prom;
   const numbers2: Array<number> = numbers2Res.map((n) => parseInt(n) / 1e18);
@@ -49,8 +40,7 @@ export const lottery = async (
     lotteryNumbers: numbers1.map((x) => Number(x)),
     poolSize: ceilDecimal(poolSize, 2),
     burned: ceilDecimal((poolSize / 100) * ratesToUse.burn, 2),
-    contractLink:
-      "https://bscscan.com/address/0x3c3f2049cc17c136a604be23cf7e42745edf3b91",
+    contractLink: "https://bscscan.com/address/0x3c3f2049cc17c136a604be23cf7e42745edf3b91",
     jackpotTicket: numbers2[1] / 10,
     match2Ticket: numbers2[3] / 10,
     match3Ticket: numbers2[2] / 10,
@@ -63,10 +53,7 @@ export const lottery = async (
 
 export default async (_req: NowRequest, res: NowResponse) => {
   const { lotteryNumber } = _req.query;
-  if (
-    typeof lotteryNumber !== "undefined" &&
-    /\d/.test(lotteryNumber as string)
-  ) {
+  if (typeof lotteryNumber !== "undefined" && /\d/.test(lotteryNumber as string)) {
     const data = await lottery(Number(lotteryNumber));
     res.status(200).send(data);
   } else {

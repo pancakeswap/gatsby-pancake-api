@@ -4,18 +4,12 @@ const hour = 60 * 60 * 1000;
 export const generateLotteryDate = (issueIndex: number): Date => {
   const lotteryDate = new Date(firstLottery);
   if (issueIndex < 48) {
-    lotteryDate.setTime(
-      lotteryDate.getTime() + (issueIndex - numberOfTestLotteries) * 2 * hour
-    );
+    lotteryDate.setTime(lotteryDate.getTime() + (issueIndex - numberOfTestLotteries) * 2 * hour);
   } else if (issueIndex < 225) {
-    lotteryDate.setTime(
-      lotteryDate.getTime() + (48 - numberOfTestLotteries) * 2 * hour
-    );
+    lotteryDate.setTime(lotteryDate.getTime() + (48 - numberOfTestLotteries) * 2 * hour);
     lotteryDate.setTime(lotteryDate.getTime() + (issueIndex - 47) * 6 * hour);
   } else {
-    lotteryDate.setTime(
-      lotteryDate.getTime() + (48 - numberOfTestLotteries) * 2 * hour
-    );
+    lotteryDate.setTime(lotteryDate.getTime() + (48 - numberOfTestLotteries) * 2 * hour);
     lotteryDate.setTime(lotteryDate.getTime() + (225 - 48) * 6 * hour);
     lotteryDate.setTime(lotteryDate.getTime() + (issueIndex - 224) * 12 * hour);
   }
