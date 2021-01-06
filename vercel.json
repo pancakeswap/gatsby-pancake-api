@@ -1,4 +1,13 @@
 {
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/api/time",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/api/(.*)",
