@@ -1,11 +1,10 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "redirects": [
+  "rewrites": [
     {
-      "source": "/",
-      "destination": "/api/time",
-      "permanent": true
+      "source": "/api/v1/:match*",
+      "destination": "https://api.pancakeswap.finance/api/v1/:match*"
     }
   ],
   "headers": [
@@ -27,6 +26,27 @@
         {
           "key" : "Cache-Control",
           "value" : "s-maxage=3600, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/api/v1/(.*)",
+      "headers": [
+        { 
+          "key": "Access-Control-Allow-Origin", 
+          "value": "*" 
+        },
+        { 
+          "key": "Access-Control-Allow-Methods", 
+          "value": "GET, HEAD, OPTIONS" 
+        },
+        {
+          "key": "Access-Control-Allow-Headers", 
+          "value": "*"
+        },
+        {
+          "key" : "Cache-Control",
+          "value" : "no-cache, no-store, must-revalidate"
         }
       ]
     }
