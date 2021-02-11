@@ -1,7 +1,7 @@
 import { NowRequest, NowResponse } from "@vercel/node";
 import { generateLotteryDate } from "../utils/generateLotteryDate";
 import { ratesV2, ratesV1 } from "../utils/lotteryRates";
-import { getIssueIndex, getSingleLotteryBatch, SingleLottery } from "../utils/lotteryUtils";
+import { getIssueIndex, getRates, getSingleLotteryBatch, SingleLottery } from "../utils/lotteryUtils";
 import { ceilDecimal } from "../utils/mathUtils";
 import { LOTTERY_CONTRACT } from "../utils/constants";
 
@@ -33,7 +33,7 @@ export const lottery = async (
   const numbers2: Array<number> = numbers2Res.map((n) => parseInt(n) / 1e18);
 
   const lotteryDate = generateLotteryDate(lotteryNumber);
-  const ratesToUse = lotteryNumber >= 206 ? ratesV2 : ratesV1;
+  const ratesToUse = getRates(lotteryNumber);
   const poolSize = numbers2[0];
   const lottery: SingleLottery = {
     lotteryNumber,
