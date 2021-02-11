@@ -3,6 +3,7 @@ import { generateLotteryDate } from "../utils/generateLotteryDate";
 import { rates, ratesOld } from "../utils/lotteryRates";
 import { getIssueIndex, getSingleLotteryBatch, SingleLottery } from "../utils/lotteryUtils";
 import { ceilDecimal } from "../utils/mathUtils";
+import { LOTTERY_CONTRACT } from "../utils/constants";
 
 export const lottery = async (
   lotteryNumber: number
@@ -40,7 +41,7 @@ export const lottery = async (
     lotteryNumbers: numbers1.map((x) => Number(x)),
     poolSize: ceilDecimal(poolSize, 2),
     burned: ceilDecimal((poolSize / 100) * ratesToUse.burn, 2),
-    contractLink: "https://bscscan.com/address/0x3c3f2049cc17c136a604be23cf7e42745edf3b91",
+    contractLink: `https://bscscan.com/address/${LOTTERY_CONTRACT}`,
     jackpotTicket: numbers2[1] / 10,
     match2Ticket: numbers2[3] / 10,
     match3Ticket: numbers2[2] / 10,
