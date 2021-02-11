@@ -1,6 +1,5 @@
 import { NowRequest, NowResponse } from "@vercel/node";
 import { generateLotteryDate } from "../utils/generateLotteryDate";
-import { ratesV2, ratesV1 } from "../utils/lotteryRates";
 import { getIssueIndex, getRates, getSingleLotteryBatch, SingleLottery } from "../utils/lotteryUtils";
 import { ceilDecimal } from "../utils/mathUtils";
 import { LOTTERY_CONTRACT } from "../utils/constants";

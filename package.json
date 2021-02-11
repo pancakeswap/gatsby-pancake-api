@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "gatsby develop",
     "build": "gatsby build",
-    "format": "prettier --write 'api/**/*.{js,ts}'",
+    "format": "prettier --write '*/**/*.{js,ts}'",
     "test": "jest",
     "test:coverage": "jest --coverage"
   },

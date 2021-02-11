@@ -1,6 +1,6 @@
 import Web3 from "web3";
 import * as lottery from "../api/lottery";
-import {LOTTERY_CONTRACT} from "../utils/constants";
+import { LOTTERY_CONTRACT } from "../utils/constants";
 
 const lotteryABI = require("../contracts/lottery");
 
