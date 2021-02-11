@@ -1,6 +1,6 @@
 import { PromisifyBatchRequest } from "../lib/PromiseBatchRequest";
 import { getContract } from "../lib/contract";
-import { rates, ratesOld } from "./lotteryRates";
+import { ratesV2, ratesV1 } from "./lotteryRates";
 import {LOTTERY_CONTRACT} from "./constants";
 
 const lotteryABI = require("../contracts/lottery");
@@ -116,7 +116,7 @@ export const getIssueIndex = async (): Promise<number | { error: string; errorMe
 };
 
 export const getRates = (lotteryNumber: number) => {
-  const ratesToUse = lotteryNumber >= 206 ? rates : ratesOld;
+  const ratesToUse = lotteryNumber >= 206 ? ratesV2 : ratesV1;
   return ratesToUse;
 };
 
