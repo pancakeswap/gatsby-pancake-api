@@ -43,11 +43,13 @@ export const lottery = async (
     burned: ceilDecimal((poolSize / 100) * ratesToUse.burn, 2),
     contractLink: `https://bscscan.com/address/${LOTTERY_CONTRACT}`,
     jackpotTicket: numbers2[1] / 10,
-    match2Ticket: numbers2[3] / 10,
     match3Ticket: numbers2[2] / 10,
+    match2Ticket: numbers2[3] / 10,
+    match1Ticket: numbers2[4] ? numbers2[4] / 10 : null,
     poolJackpot: ceilDecimal((poolSize / 100) * ratesToUse.jackpot, 2),
     poolMatch3: ceilDecimal((poolSize / 100) * ratesToUse.match3, 2),
     poolMatch2: ceilDecimal((poolSize / 100) * ratesToUse.match2, 2),
+    poolMatch1: ratesToUse.match1 ? ceilDecimal((poolSize / 100) * ratesToUse.match1, 2) : null,
   };
   return lottery;
 };

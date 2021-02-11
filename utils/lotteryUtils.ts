@@ -7,7 +7,7 @@ const lotteryABI = require("../contracts/lottery");
 
 export interface SingleLotteryReturn {
   numbers1: Promise<[string, string, string, string]>;
-  numbers2: Promise<[string, string, string, string]>;
+  numbers2: Promise<Array<string>>;
   index: number;
 }
 
@@ -25,9 +25,11 @@ export interface SingleLottery {
   jackpotTicket: number;
   match3Ticket: number;
   match2Ticket: number;
+  match1Ticket: number | null;
   poolJackpot: number;
   poolMatch3: number;
   poolMatch2: number;
+  poolMatch1: number | null;
   burned: number;
   contractLink: string;
 }
@@ -56,16 +58,26 @@ export const getSingleLotteryBatch = (index: number): SingleLotteryReturn => {
     lotteryContract.methods.historyNumbers(index, 2).call,
     lotteryContract.methods.historyNumbers(index, 3).call,
   ].map((x) => batch.add(x));
-  [
-    lotteryContract.methods.historyAmount(index, 0).call,
-    lotteryContract.methods.historyAmount(index, 1).call,
-    lotteryContract.methods.historyAmount(index, 2).call,
-    lotteryContract.methods.historyAmount(index, 3).call,
-  ].map((x) => batch2.add(x));
+  if (index >= 348) {
+    [
+      lotteryContract.methods.historyAmount(index, 0).call,
+      lotteryContract.methods.historyAmount(index, 1).call,
+      lotteryContract.methods.historyAmount(index, 2).call,
+      lotteryContract.methods.historyAmount(index, 3).call,
+      lotteryContract.methods.historyAmount(index, 4).call,
+    ].map((x) => batch2.add(x));
+  } else {
+    [
+      lotteryContract.methods.historyAmount(index, 0).call,
+      lotteryContract.methods.historyAmount(index, 1).call,
+      lotteryContract.methods.historyAmount(index, 2).call,
+      lotteryContract.methods.historyAmount(index, 3).call,
+    ].map((x) => batch2.add(x));
+  }
 
   return {
     numbers1: batch.execute() as Promise<[string, string, string, string]>,
-    numbers2: batch2.execute() as Promise<[string, string, string, string]>,
+    numbers2: batch2.execute() as Promise<Array<string>>,
     index,
   };
 };
@@ -80,7 +92,7 @@ export const getSingleLotteryBatch = (index: number): SingleLotteryReturn => {
  */
 const createLotteryItem = async (
   numbers1Prom: Promise<[string, string, string, string]>,
-  numbers2Prom: Promise<[string, string, string, string]>,
+  numbers2Prom: Promise<Array<string>>,
   index: number,
   finalNumbers: Array<Lottery>
 ) => {
