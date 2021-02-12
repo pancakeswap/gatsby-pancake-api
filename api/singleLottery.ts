@@ -1,6 +1,6 @@
 import { NowRequest, NowResponse } from "@vercel/node";
 import { generateLotteryDate } from "../utils/generateLotteryDate";
-import { getIssueIndex, getRates, getSingleLotteryBatch, SingleLottery } from "../utils/lotteryUtils";
+import { getIssueIndex, getRates, getSingleLotteryBatch, getTicketPrice, SingleLottery } from "../utils/lotteryUtils";
 import { ceilDecimal } from "../utils/mathUtils";
 import { LOTTERY_CONTRACT } from "../utils/constants";
 
@@ -33,6 +33,7 @@ export const lottery = async (
 
   const lotteryDate = generateLotteryDate(lotteryNumber);
   const ratesToUse = getRates(lotteryNumber);
+  const ticketPrice = getTicketPrice(lotteryNumber);
   const poolSize = numbers2[0];
   const lottery: SingleLottery = {
     lotteryNumber,
@@ -41,10 +42,10 @@ export const lottery = async (
     poolSize: ceilDecimal(poolSize, 2),
     burned: ceilDecimal((poolSize / 100) * ratesToUse.burn, 2),
     contractLink: `https://bscscan.com/address/${LOTTERY_CONTRACT}`,
-    jackpotTicket: numbers2[1] / 10,
-    match3Ticket: numbers2[2] / 10,
-    match2Ticket: numbers2[3] / 10,
-    match1Ticket: numbers2[4] ? numbers2[4] / 10 : null,
+    jackpotTicket: numbers2[1] / ticketPrice,
+    match3Ticket: numbers2[2] / ticketPrice,
+    match2Ticket: numbers2[3] / ticketPrice,
+    match1Ticket: numbers2[4] ? numbers2[4] / ticketPrice : null,
     poolJackpot: ceilDecimal((poolSize / 100) * ratesToUse.jackpot, 2),
     poolMatch3: ceilDecimal((poolSize / 100) * ratesToUse.match3, 2),
     poolMatch2: ceilDecimal((poolSize / 100) * ratesToUse.match2, 2),
