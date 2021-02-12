@@ -13,13 +13,9 @@ describe("Lottery Function", () => {
 
     maxLotteries = Number(await lotteryContract.methods.issueIndex().call());
   });
-  it("lottery pagesize 10", async () => {
-    const lotteryResponse = await lottery.lottery(10);
-    expect(lotteryResponse.lotteries).toHaveLength(10);
-  });
-  it("lottery pagesize 20", async () => {
-    const lotteryResponse = await lottery.lottery(20);
-    expect(lotteryResponse.lotteries).toHaveLength(20);
+  it("lottery pagesize 2", async () => {
+    const lotteryResponse = await lottery.lottery(2);
+    expect(lotteryResponse.lotteries).toHaveLength(2);
   });
   it("lottery no pagesize defined", async () => {
     const lotteryResponse = await lottery.lottery();

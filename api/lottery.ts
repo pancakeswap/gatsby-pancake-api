@@ -24,7 +24,7 @@ export const lottery = async (
   }
 
   const finalNumbersProm: Array<SingleLotteryReturn> = [];
-  const totalPage = pageSize ? Math.ceil(issueIndex / pageSize) : 0;
+  const totalPage = pageSize ? Math.ceil(issueIndex / pageSize - 1) : 0;
 
   if (typeof pageSize !== "undefined") {
     if (pageSize * page > issueIndex) {
