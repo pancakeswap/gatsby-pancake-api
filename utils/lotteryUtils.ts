@@ -1,7 +1,7 @@
 import { PromisifyBatchRequest } from "../lib/PromiseBatchRequest";
-import { getContract } from "../lib/contract";
 import { ratesV2, ratesV1, rates, Rates } from "./lotteryRates";
 import { LOTTERY_CONTRACT } from "./constants";
+import { getContract } from "../lib/web3";
 
 const lotteryABI = require("../contracts/lottery");
 

@@ -1,7 +1,7 @@
 import Web3 from "web3";
 import { BatchRequest } from "web3-core";
 
-import { getWeb3 } from "./eth";
+import { getWeb3 } from "./web3";
 
 export class PromisifyBatchRequest<R> {
   web3: Web3;

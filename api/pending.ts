@@ -1,6 +1,6 @@
 import { NowRequest, NowResponse } from "@vercel/node";
 import BigNumber from "bignumber.js";
-import { getContract } from "../lib/contract";
+import { getContract } from "../lib/web3";
 
 const chefABI = require("../contracts/chef");
 
