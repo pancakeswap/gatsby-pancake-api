@@ -1,11 +1,13 @@
 import Web3 from "web3";
-import { getProvider } from "./provider";
-import { HttpProvider as Web3HttpProvider } from "web3-core";
 
-let web3: Web3 | undefined;
+const BSC_NODE_RPC = [
+  "https://bsc-dataseed.binance.org/",
+  "https://bsc-dataseed1.defibit.io/",
+  "https://bsc-dataseed1.ninicoin.io/",
+];
 
 export const getWeb3 = () => {
-  if (!web3 || !(web3.eth.currentProvider as Web3HttpProvider).connected) web3 = new Web3(getProvider());
+  const provider: string = BSC_NODE_RPC[Math.floor(Math.random() * BSC_NODE_RPC.length)];
 
-  return web3;
+  return new Web3(new Web3.providers.HttpProvider(provider, { timeout: 10000 }));
 };
