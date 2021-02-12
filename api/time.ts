@@ -1,6 +1,6 @@
 import { NowRequest, NowResponse } from "@vercel/node";
 
-export default (_req: NowRequest, res: NowResponse) => {
+export default async (req: NowRequest, res: NowResponse): Promise<void> => {
   const time = new Date().getTime();
 
   res.json({ time });

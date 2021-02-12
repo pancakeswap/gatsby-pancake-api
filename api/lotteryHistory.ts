@@ -27,7 +27,7 @@ export const lotteryHistory = async (): Promise<
   return history;
 };
 
-export default async (_req: NowRequest, res: NowResponse) => {
+export default async (req: NowRequest, res: NowResponse): Promise<void> => {
   try {
     const data = await lotteryHistory();
     res.status(200).send(data);

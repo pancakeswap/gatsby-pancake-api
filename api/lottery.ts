@@ -1,4 +1,4 @@
-import { NowRequest, NowResponse, NowRequestQuery } from "@vercel/node";
+import { NowRequest, NowRequestQuery, NowResponse } from "@vercel/node";
 import {
   computeLotteries,
   getIssueIndex,
@@ -65,14 +65,13 @@ export const lottery = async (
 export const handleAPICall = async (query: NowRequestQuery) => {
   const { pageSize, page } = query;
 
-  const data = await lottery(
+  return await lottery(
     typeof pageSize !== "undefined" ? Number(pageSize) : undefined,
     typeof page !== "undefined" ? Number(page) : undefined
   );
-  return data;
 };
 
-export default async (_req: NowRequest, res: NowResponse) => {
-  const data = await handleAPICall(_req.query);
+export default async (req: NowRequest, res: NowResponse): Promise<void> => {
+  const data = await handleAPICall(req.query);
   res.status(200).send(data);
 };

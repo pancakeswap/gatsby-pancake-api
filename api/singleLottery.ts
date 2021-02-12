@@ -54,12 +54,12 @@ export const lottery = async (
   return lottery;
 };
 
-export default async (_req: NowRequest, res: NowResponse) => {
-  const { lotteryNumber } = _req.query;
+export default async (req: NowRequest, res: NowResponse): Promise<void> => {
+  const { lotteryNumber } = req.query;
   if (typeof lotteryNumber !== "undefined" && /\d/.test(lotteryNumber as string)) {
     const data = await lottery(Number(lotteryNumber));
     res.status(200).send(data);
   } else {
-    return res.status(400).send({ error: "Invalid Query param" });
+    res.status(400).send({ error: "Invalid Query param" });
   }
 };
