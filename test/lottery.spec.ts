@@ -1,6 +1,6 @@
 import Web3 from "web3";
 import * as lottery from "../api/lottery";
-import { LOTTERY_CONTRACT } from "../utils/constants";
+import { OLD_LOTTERY_CONTRACT } from "../utils/constants";
 
 const lotteryABI = require("../contracts/lottery");
 
@@ -9,7 +9,7 @@ describe("Lottery Function", () => {
   beforeAll(async () => {
     const web3 = new Web3(new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org"));
 
-    const lotteryContract = new web3.eth.Contract(lotteryABI, LOTTERY_CONTRACT);
+    const lotteryContract = new web3.eth.Contract(lotteryABI, OLD_LOTTERY_CONTRACT);
 
     maxLotteries = Number(await lotteryContract.methods.issueIndex().call());
   });
@@ -50,7 +50,7 @@ describe("Lottery Handler", () => {
   beforeAll(async () => {
     const web3 = new Web3(new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org"));
 
-    const lotteryContract = new web3.eth.Contract(lotteryABI, LOTTERY_CONTRACT);
+    const lotteryContract = new web3.eth.Contract(lotteryABI, OLD_LOTTERY_CONTRACT);
 
     maxLotteries = Number(await lotteryContract.methods.issueIndex().call());
   });

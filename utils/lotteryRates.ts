@@ -6,7 +6,7 @@ export interface Rates {
   match1?: number;
 }
 
-// Rates since 348
+// Rates since 349
 export const rates: Rates = {
   burn: 15,
   jackpot: 50,

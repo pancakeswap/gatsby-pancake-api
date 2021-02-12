@@ -1,7 +1,7 @@
 import { PromisifyBatchRequest } from "../lib/PromiseBatchRequest";
 import { getContract } from "../lib/contract";
 import { ratesV2, ratesV1, rates, Rates } from "./lotteryRates";
-import { LOTTERY_CONTRACT } from "./constants";
+import { LOTTERY_CONTRACT, OLD_LOTTERY_CONTRACT } from "./constants";
 
 const lotteryABI = require("../contracts/lottery");
 
@@ -49,7 +49,8 @@ export interface LotteryHistory {
  * @param index
  */
 export const getSingleLotteryBatch = (index: number): SingleLotteryReturn => {
-  const lotteryContract = getContract(lotteryABI, LOTTERY_CONTRACT);
+  const contractAddress = getContractAddress(index);
+  const lotteryContract = getContract(lotteryABI, contractAddress);
   const batch = new PromisifyBatchRequest<string>();
   const batch2 = new PromisifyBatchRequest<string>();
   [
@@ -125,6 +126,14 @@ export const getIssueIndex = async (): Promise<number | { error: string; errorMe
     };
   }
   return issueIndex;
+};
+
+export const getContractAddress = (index: number): string => {
+  if (index <= 348) {
+    return OLD_LOTTERY_CONTRACT;
+  }
+
+  return LOTTERY_CONTRACT;
 };
 
 /**
