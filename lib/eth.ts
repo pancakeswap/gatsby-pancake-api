@@ -9,5 +9,5 @@ const BSC_NODE_RPC = [
 export const getWeb3 = () => {
   const provider: string = BSC_NODE_RPC[Math.floor(Math.random() * BSC_NODE_RPC.length)];
 
-  return new Web3(new Web3.providers.HttpProvider(provider, { timeout: 10000 }));
+  return new Web3(new Web3.providers.HttpProvider(provider, { timeout: 30000 }));
 };
