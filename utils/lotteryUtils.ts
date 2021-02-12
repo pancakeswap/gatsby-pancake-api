@@ -58,7 +58,7 @@ export const getSingleLotteryBatch = (index: number): SingleLotteryReturn => {
     lotteryContract.methods.historyNumbers(index, 2).call,
     lotteryContract.methods.historyNumbers(index, 3).call,
   ].map((x) => batch.add(x));
-  if (index >= 348) {
+  if (index >= 349) {
     [
       lotteryContract.methods.historyAmount(index, 0).call,
       lotteryContract.methods.historyAmount(index, 1).call,
