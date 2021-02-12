@@ -150,8 +150,10 @@ export const getRates = (index: number): Rates => {
 
 export const getAllLotteries = (issueIndex: number): Promise<Array<Lottery>> => {
   const finalNumbersProm: Array<SingleLotteryReturn> = [];
-  for (let i = issueIndex - 1; i >= 0; i--) {
-    finalNumbersProm.push(getSingleLotteryBatch(i));
+  for (let i = issueIndex; i >= 0; i--) {
+    if (i !== 349) {
+      finalNumbersProm.push(getSingleLotteryBatch(i));
+    }
   }
   return computeLotteries(finalNumbersProm);
 };

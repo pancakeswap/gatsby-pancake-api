@@ -19,11 +19,11 @@ export const lottery = async (
     return issueIndex;
   }
   //Check if lotteryNumber is out of range (small 0 or bigger last Lottery (Drawn))
-  if (lotteryNumber < 0 || lotteryNumber > issueIndex - 1) {
+  if (lotteryNumber < 0 || lotteryNumber > issueIndex) {
     return {
       error: "lotteryNumber out of range",
       errorMessage: `The LotteryNumber you provided is does not exists`,
-      maxLotteryNumber: issueIndex - 1,
+      maxLotteryNumber: issueIndex,
     };
   }
   const { numbers1: numbers1Prom, numbers2: numbers2Prom } = getSingleLotteryBatch(lotteryNumber);
