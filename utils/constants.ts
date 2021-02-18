@@ -1,1 +1,6 @@
+// BEP-20 addresses.
+export const CAKE = "0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82";
+export const DEAD = "0x000000000000000000000000000000000000dEaD";
+
+// Contract addresses.
 export const LOTTERY_CONTRACT = "0x3C3f2049cc17C136a604bE23cF7E42745edf3b91";
