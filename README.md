@@ -1,21 +1,47 @@
-![Gatsby Logo](https://github.com/vercel/vercel/blob/master/packages/frameworks/logos/gatsby.svg)
+# pancake-api
 
-# Gatsby Example
+Set of endpoints utilities for PancakeSwap, based on Serverless.
 
-This directory is a brief example of a [Gatsby](https://www.gatsbyjs.org/) app with [Serverless Functions](https://vercel.com/docs/v2/serverless-functions/introduction) that can be deployed with Vercel and zero configuration.
+## Dependencies
 
-## Deploy Your Own
+- [Vercel CLI](https://vercel.com/download)
+    - Required to emulate local environment (serverless functions).
 
-Deploy your own Gatsby project, along with Serverless Functions, with Vercel.
+# Development
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/vercel/vercel/tree/master/examples/gatsby)
-
-_Live Example: https://gatsby.now-examples.now.sh_
-
-### How We Created This Example
-
-To get started with Gatsby on Vercel, you can use the [Gatsby CLI](https://www.gatsbyjs.org/docs/gatsby-cli/) to initialize the project:
+## Install requirements
 
 ```shell
-$ gatsby new gatsby-site
+yarn global add vercel
+```
+
+## Build
+
+```shell
+# Install dependencies
+yarn
+
+# Build project
+vercel dev
+```
+
+Endpoints are based on filename inside the `api/` folder.
+
+```shell
+# api/version.ts
+curl -X GET 'localhost:3000/api/version'
+
+# ...
+```
+
+# Production
+
+## Deploy
+
+Deployments to production should be triggered by a webhook when a commit, or a pull-request is merged to `master`.
+
+If you need to force a deployment, use the following command:
+
+```shell
+vercel --prod
 ```
