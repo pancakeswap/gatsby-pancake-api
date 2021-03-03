@@ -1,7 +1,7 @@
+import BigNumber from "bignumber.js";
 import { getContract } from "../lib/web3";
 import { CAKE, DEAD } from "./constants";
-import bep20 from "../contracts/bep20.json";
-import BigNumber from "bignumber.js";
+import bep20 from "./abis/bep20.json";
 
 const contract = getContract(bep20, CAKE);
 

@@ -2,8 +2,7 @@ import { PromisifyBatchRequest } from "../lib/PromiseBatchRequest";
 import { ratesV2, ratesV1, rates, Rates } from "./lotteryRates";
 import { LOTTERY_CONTRACT } from "./constants";
 import { getContract } from "../lib/web3";
-
-const lotteryABI = require("../contracts/lottery");
+import lotteryABI from "./abis/lottery.json";
 
 export interface SingleLotteryReturn {
   numbers1: Promise<[string, string, string, string]>;

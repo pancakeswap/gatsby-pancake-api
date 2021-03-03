@@ -1,8 +1,7 @@
 import * as lottery from "../api/lottery";
 import { LOTTERY_CONTRACT } from "../utils/constants";
 import { getWeb3 } from "../lib/web3";
-
-const lotteryABI = require("../contracts/lottery");
+import lotteryABI from "../utils/abis/lottery.json";
 
 describe("Lottery Function", () => {
   let maxLotteries: number;

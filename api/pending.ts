@@ -1,8 +1,7 @@
 import { NowRequest, NowResponse } from "@vercel/node";
 import BigNumber from "bignumber.js";
 import { getContract } from "../lib/web3";
-
-const chefABI = require("../contracts/chef");
+import chefABI from "../utils/abis/chef.json";
 
 const getBalanceNumber = (balance: any, decimals = 18) => {
   const displayBalance = balance.dividedBy(new BigNumber(10).pow(decimals));
