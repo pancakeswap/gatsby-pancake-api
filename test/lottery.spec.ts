@@ -1,6 +1,6 @@
 import * as lottery from "../api/lottery";
 import { LOTTERY_CONTRACT } from "../utils/constants";
-import { getWeb3 } from "../lib/web3";
+import { getWeb3 } from "../utils/web3";
 import lotteryABI from "../utils/abis/lottery.json";
 
 describe("Lottery Function", () => {

@@ -1,6 +1,6 @@
 import { NowRequest, NowResponse } from "@vercel/node";
 import BigNumber from "bignumber.js";
-import { getContract } from "../lib/web3";
+import { getContract } from "../utils/web3";
 import chefABI from "../utils/abis/chef.json";
 
 const getBalanceNumber = (balance: any, decimals = 18) => {
