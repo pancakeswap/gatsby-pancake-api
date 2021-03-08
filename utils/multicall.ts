@@ -19,7 +19,5 @@ export const multicall = async (abi: any[], calls: Call[]) => {
     itf.encodeFunctionData(call.name, call.params),
   ]);
   const { returnData } = await contract.methods.aggregate(calldata).call();
-  return returnData.map((call: any, index: number) =>
-    itf.decodeFunctionResult(calls[index].name, call)
-  );
+  return returnData.map((call: any, index: number) => itf.decodeFunctionResult(calls[index].name, call));
 };

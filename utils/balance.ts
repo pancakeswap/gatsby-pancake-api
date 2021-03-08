@@ -31,7 +31,7 @@ const pools: string[] = [
 export const getTotalStaked = async (address: string): Promise<number> => {
   const calls = pools.map((pool: string) => ({
     address: pool,
-    name: 'userInfo',
+    name: "userInfo",
     params: [address],
   }));
 
@@ -41,7 +41,8 @@ export const getTotalStaked = async (address: string): Promise<number> => {
   const stakedMasterChef = await masterChefContract.methods.balanceOf(address).call();
 
   const stakedSmartChef = userInfo.reduce(
-    (acc, pool, index) => new BigNumber(userInfo[index].amount._hex).plus(new BigNumber(acc)), 0
+    (acc, pool, index) => new BigNumber(userInfo[index].amount._hex).plus(new BigNumber(acc)),
+    0
   );
 
   return new BigNumber(stakedMasterChef).plus(new BigNumber(stakedSmartChef)).div(1e18).toNumber();
