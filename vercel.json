@@ -9,6 +9,10 @@
     {
       "source": "/api/governance/vote/:address",
       "destination": "/api/governance/vote"
+    },
+    {
+      "source": "/api/governance/vote/:address/:block",
+      "destination": "/api/governance/vote"
     }
   ],
   "headers": [

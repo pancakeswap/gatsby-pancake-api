@@ -1,12 +1,14 @@
 import BigNumber from "bignumber.js";
-import { multicall } from "./multicall";
 import bep20ABI from "./abis/bep20.json";
 import smartChefABI from "./abis/smartchef.json";
 import { getContract } from "./web3";
-import { SYRUP } from "./constants";
+import { CAKE, SYRUP } from "./constants";
 
 // TODO:  Fetch from config API.
 const pools: string[] = [
+  "0x580DC9bB9260A922E3A4355b9119dB990F09410d", // NULS
+  "0x6f0037d158eD1AeE395e1c12d21aE8583842F472", // BELT
+  "0x423382f989C6C289c8D441000e1045e231bd7d90", // RAMP
   "0x0A595623b58dFDe6eB468b613C11A7A8E84F09b9", // BFI
   "0x9E6dA246d369a41DC44673ce658966cAf487f7b2", // DEXE
   "0x2C0f449387b15793B9da27c2d945dBed83ab1B07", // BEL
@@ -28,22 +30,30 @@ const pools: string[] = [
   "0x624ef5C2C6080Af188AF96ee5B3160Bb28bb3E02", // DITTO
 ];
 
-export const getTotalStaked = async (address: string): Promise<number> => {
-  const calls = pools.map((pool: string) => ({
-    address: pool,
-    name: "userInfo",
-    params: [address],
-  }));
+export const getTotalStaked = async (address: string, block: string): Promise<number> => {
+  const blockNumber = block === undefined ? "latest" : block;
+  let balance = new BigNumber(0);
 
-  const userInfo = await multicall(smartChefABI, calls);
+  // Cake balance.
+  const cakeContract = getContract(bep20ABI, CAKE, true);
+  const cakeBalance = await cakeContract.methods.balanceOf(address).call(undefined, blockNumber);
+  balance = balance.plus(cakeBalance);
 
-  const masterChefContract = getContract(bep20ABI, SYRUP);
-  const stakedMasterChef = await masterChefContract.methods.balanceOf(address).call();
+  // Syrup balance (for main staking pool).
+  const syrupContract = getContract(bep20ABI, SYRUP, true);
+  const syrupBalance = await syrupContract.methods.balanceOf(address).call(undefined, blockNumber);
+  balance = balance.plus(syrupBalance);
 
-  const stakedSmartChef = userInfo.reduce(
-    (acc, pool, index) => new BigNumber(userInfo[index].amount._hex).plus(new BigNumber(acc)),
-    0
-  );
+  for (const pool of pools) {
+    try {
+      const contract = getContract(smartChefABI, pool, true);
+      const debt = await contract.methods.userInfo(address).call(undefined, blockNumber);
 
-  return new BigNumber(stakedMasterChef).plus(new BigNumber(stakedSmartChef)).div(1e18).toNumber();
+      balance = balance.plus(new BigNumber(debt.amount));
+    } catch (error) {
+      // Multicall will fail and not provide data about other pools balance.
+    }
+  }
+
+  return balance.div(1e18).toNumber();
 };
