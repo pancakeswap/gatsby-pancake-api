@@ -10,7 +10,7 @@ export interface Call {
   params?: any[]; // Function params
 }
 
-export const multicall = async (abi: any[], calls: Call[], block: string) => {
+export const multicall = async (abi: any[], calls: Call[]) => {
   const contract = getContract(MultiCallAbi, MULTICALL_CONTRACT);
   const itf = new Interface(abi);
 
@@ -18,6 +18,6 @@ export const multicall = async (abi: any[], calls: Call[], block: string) => {
     call.address?.toLowerCase(),
     itf.encodeFunctionData(call.name, call.params),
   ]);
-  const { returnData } = await contract.methods.aggregate(calldata).call(undefined, block);
+  const { returnData } = await contract.methods.aggregate(calldata).call();
   return returnData.map((call: any, index: number) => itf.decodeFunctionResult(calls[index].name, call));
 };

@@ -20,7 +20,7 @@ export const getTotalStaked = async (address: string, block: string): Promise<nu
 
   // MasterChef contract.
   const masterContract = getContract(masterChefABI, MASTERCHEF_CONTRACT, true);
-  const poolLength = await masterContract.methods.poolLength().call();
+  const poolLength = await masterContract.methods.poolLength().call(undefined, blockNumber);
 
   const promisesBalances = [...Array(poolLength)].map((_, index) => {
     return masterContract.methods.userInfo(index, address).call(undefined, blockNumber);
