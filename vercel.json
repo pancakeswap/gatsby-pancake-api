@@ -57,6 +57,27 @@
           "value" : "no-cache, no-store, must-revalidate"
         }
       ]
+    },
+    {
+      "source": "/api/governance/vote/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, HEAD, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "*"
+        },
+        {
+          "key" : "Cache-Control",
+          "value" : "public, max-age=60, s-max-age=60"
+        }
+      ]
     }
   ]
 }
