@@ -78,30 +78,34 @@ export const getTotalStaked = async (address: string, block: string): Promise<nu
   const blockNumber = block === undefined ? "latest" : block;
   let balance = new BigNumber(0);
 
-  // Cake balance in wallet.
-  const cakeContract = getContract(bep20ABI, CAKE, true);
-  const cakeBalance = await cakeContract.methods.balanceOf(address).call(undefined, blockNumber);
-  balance = balance.plus(cakeBalance);
+  try {
+    // Cake balance in wallet.
+    const cakeContract = getContract(bep20ABI, CAKE, true);
+    const cakeBalance = await cakeContract.methods.balanceOf(address).call(undefined, blockNumber);
+    balance = balance.plus(cakeBalance);
 
-  // MasterChef contract.
-  const masterContract = getContract(masterChefABI, MASTERCHEF_CONTRACT, true);
-  const cakeMainStaking: UserInfoResult = await masterContract.methods
-    .userInfo(0, address)
-    .call(undefined, blockNumber);
-  balance = balance.plus(cakeMainStaking.amount);
+    // MasterChef contract.
+    const masterContract = getContract(masterChefABI, MASTERCHEF_CONTRACT, true);
+    const cakeMainStaking: UserInfoResult = await masterContract.methods
+      .userInfo(0, address)
+      .call(undefined, blockNumber);
+    balance = balance.plus(cakeMainStaking.amount);
 
-  // Pools balances.
-  const promises = pools.map((pool) => {
-    const contract = getContract(smartChefABI, pool, true);
-    return contract.methods.userInfo(address).call(undefined, blockNumber);
-  });
-  const results = await Promise.all(promises.map((p) => p.catch((e: Error) => e)));
-  const validResults = results.filter((result) => !(result instanceof Error));
+    // Pools balances.
+    const promises = pools.map((pool) => {
+      const contract = getContract(smartChefABI, pool, true);
+      return contract.methods.userInfo(address).call(undefined, blockNumber);
+    });
+    const results = await Promise.all(promises.map((p) => p.catch((e: Error) => e)));
+    const validResults = results.filter((result) => !(result instanceof Error));
 
-  const balancesMapping = validResults.reduce(
-    (acc, result: UserInfoResult) => acc.plus(new BigNumber(result.amount)),
-    new BigNumber(0)
-  );
+    const balancesMapping = validResults.reduce(
+      (acc, result: UserInfoResult) => acc.plus(new BigNumber(result.amount)),
+      new BigNumber(0)
+    );
 
-  return balance.plus(balancesMapping).div(1e18).toNumber();
+    return balance.plus(balancesMapping).div(1e18).toNumber();
+  } catch (e) {
+    return balance.toNumber();
+  }
 };
