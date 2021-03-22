@@ -91,10 +91,13 @@ export const getTotalStaked = async (address: string, block: string): Promise<nu
 
   try {
     // CAKE-BNB farm.
+    const masterContract = getContract(masterChefABI, MASTERCHEF_CONTRACT, true);
     const cakeBnbContract = getContract(pairABI, CAKE_BNB_FARM, true);
     const totalSupplyLP = await cakeBnbContract.methods.totalSupply().call(undefined, blockNumber);
     const reservesLP = await cakeBnbContract.methods.getReserves().call(undefined, blockNumber);
-    const cakeBnbBalance = await cakeBnbContract.methods.balanceOf(address).call(undefined, blockNumber);
+    const cakeBnbBalance: UserInfoResult = await masterContract.methods
+      .userInfo(1, address)
+      .call(undefined, blockNumber);
     const pair: Pair = new Pair(
       new TokenAmount(CAKE_TOKEN, reservesLP._reserve0.toString()),
       new TokenAmount(WBNB_TOKEN, reservesLP._reserve1.toString())
@@ -102,7 +105,7 @@ export const getTotalStaked = async (address: string, block: string): Promise<nu
     const cakeLPBalance = pair.getLiquidityValue(
       pair.token0,
       new TokenAmount(CAKE_BNB_TOKEN, totalSupplyLP.toString()),
-      new TokenAmount(CAKE_BNB_TOKEN, cakeBnbBalance.toString()),
+      new TokenAmount(CAKE_BNB_TOKEN, cakeBnbBalance.amount.toString()),
       false
     );
     balance = balance.plus(new BigNumber(cakeLPBalance.toSignificant(18)).times(1e18));
