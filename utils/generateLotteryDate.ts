@@ -11,7 +11,7 @@ export const generateLotteryDate = (issueIndex: number): Date => {
   } else {
     lotteryDate.setTime(lotteryDate.getTime() + (48 - numberOfTestLotteries) * 2 * hour);
     lotteryDate.setTime(lotteryDate.getTime() + (225 - 48) * 6 * hour);
-    lotteryDate.setTime(lotteryDate.getTime() + (issueIndex - 224) * 12 * hour);
+    lotteryDate.setTime(lotteryDate.getTime() + (issueIndex - 224 + numberOfTestLotteries) * 12 * hour);
   }
   return lotteryDate;
 };
