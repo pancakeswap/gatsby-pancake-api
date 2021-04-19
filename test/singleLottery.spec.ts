@@ -19,7 +19,7 @@ describe("Lottery Function", () => {
       expect(lotteryResponse.poolMatch1).toBe(null);
       expect(lotteryResponse.burned).toBe(30378.85);
       expect(lotteryResponse.poolSize).toBe(151894.22);
-      expect(lotteryResponse.lotteryDate.toUTCString()).toBe(new Date("2020-12-14T14:00:00.000Z").toUTCString());
+      expect(lotteryResponse.lotteryDate.toUTCString()).toBe(new Date("2020-12-16T02:00:00.000Z").toUTCString());
     } else {
       throw new Error("no error expected");
     }
