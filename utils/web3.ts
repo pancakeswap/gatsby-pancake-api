@@ -6,7 +6,12 @@ const BSC_NODE_RPC = [
   "https://bsc-dataseed1.ninicoin.io/",
 ];
 
-const BSC_ARCHIVE_NODE_RPC = ["https://bsc-private-dataseed1.nariox.org/", "https://bsc-private-dataseed4.nariox.org/"];
+const BSC_ARCHIVE_NODE_RPC = [
+  "https://bsc-private-dataseed1.nariox.org/",
+  "https://bsc-private-dataseed3.nariox.org/",
+  "https://bsc-private-dataseed4.nariox.org/",
+  "https://bsc-private-dataseed5.nariox.org/",
+];
 
 export const getWeb3 = (archive = false): Web3 => {
   const provider: string = archive

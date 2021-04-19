@@ -1,6 +1,151 @@
 // List of pools + start/end block.
 export const pools = [
   {
+    address: "0xc1E70edd0141c454b834Deac7ddDeA413424aEf9",
+    startBlock: 6638200,
+    endBlock: 8366200,
+  },
+  {
+    address: "0x189d8228CdfDc404Bd9e5bD65ff958cb5fd8855c",
+    startBlock: 6609400,
+    endBlock: 8337400,
+  },
+  {
+    address: "0x0196c582216e2463f052E2B07Ef8667Bec9Fb17a",
+    startBlock: 6584220,
+    endBlock: 8312220,
+  },
+  {
+    address: "0x8f84106286c9c8A42bc3555C835E6e2090684ab7",
+    startBlock: 6578260,
+    endBlock: 8306260,
+  },
+  {
+    address: "0xa8d32b31ECB5142f067548Bf0424389eE98FaF26",
+    startBlock: 6551860,
+    endBlock: 8279860,
+  },
+  {
+    address: "0xC59aa49aE508050c2dF653E77bE13822fFf02E9A",
+    startBlock: 6523110,
+    endBlock: 8251110,
+  },
+  {
+    address: "0x14AeA62384789EDA98f444cCb970F6730877d3F9",
+    startBlock: 6518310,
+    endBlock: 8246310,
+  },
+  {
+    address: "0xebb87dF24D65977cbe62538E4B3cFBD5d0308642",
+    startBlock: 6494400,
+    endBlock: 9086400,
+  },
+  {
+    address: "0x40918EF8efFF4aA061656013a81E0e5A8A702eA7",
+    startBlock: 6434600,
+    endBlock: 8162600,
+  },
+  {
+    address: "0x44eC1B26035865D9A7C130fD872670CD7Ebac2bC",
+    startBlock: 5896800,
+    endBlock: 7624800,
+  },
+  {
+    address: "0x1329ad151dE6C441184E32E108401126AE850937",
+    startBlock: 6380660,
+    endBlock: 8108660,
+  },
+  {
+    address: "0x9bbDc92474a7e7321B78dcDA5EF35f4981438760",
+    startBlock: 6361600,
+    endBlock: 7225600,
+  },
+  {
+    address: "0x46530d79b238f809e80313e73715b160c66677aF",
+    startBlock: 6353200,
+    endBlock: 8081200,
+  },
+  {
+    address: "0x47fD853D5baD391899172892F91FAa6d0cd8A2Aa",
+    startBlock: 6328600,
+    endBlock: 8056600,
+  },
+  {
+    address: "0xe25aB6F05BBF6C1be953BF2d7df15B3e01b8e5a5",
+    startBlock: 6325000,
+    endBlock: 8053000,
+  },
+  {
+    address: "0xEB8Fd597921E3Dd37B0F103a2625F855e2C9b9B5",
+    startBlock: 6297400,
+    endBlock: 8025400,
+  },
+  {
+    address: "0xABFd8d1942628124aB971937154f826Bce86DcbC",
+    startBlock: 6239630,
+    endBlock: 7967630,
+  },
+  {
+    address: "0x526d3c204255f807C95a99b69596f2f9f72345e5",
+    startBlock: 6211300,
+    endBlock: 7939300,
+  },
+  {
+    address: "0xAa2082BeE04fc518300ec673F9497ffa6F669dB8",
+    startBlock: 6182600,
+    endBlock: 7910600,
+  },
+  {
+    address: "0x9096625Bc0d36F5EDa6d44e511641667d89C28f4",
+    startBlock: 6153900,
+    endBlock: 7596100,
+  },
+  {
+    address: "0x78BD4dB48F8983c3C36C8EAFbEF38f6aC7B55285",
+    startBlock: 6125100,
+    endBlock: 7853100,
+  },
+  {
+    address: "0x35418e14F5aA615C4f020eFBa6e01C5DbF15AdD2",
+    startBlock: 6039800,
+    endBlock: 7767800,
+  },
+  {
+    address: "0x3c7cC49a35942fbD3C2ad428a6c22490cd709d03",
+    startBlock: 6011400,
+    endBlock: 7739400,
+  },
+  {
+    address: "0x3c7cC49a35942fbD3C2ad428a6c22490cd709d03",
+    startBlock: 5896800,
+    endBlock: 7624800,
+  },
+  {
+    address: "0xF795739737ABcFE0273f4Dced076460fdD024Dd9",
+    startBlock: 5982600,
+    endBlock: 7710600,
+  },
+  {
+    address: "0x06FF8960F7F4aE572A3f57FAe77B2882BE94Bf90",
+    startBlock: 5954000,
+    endBlock: 7682000,
+  },
+  {
+    address: "0xe4dD0C50fb314A8B2e84D211546F5B57eDd7c2b9",
+    startBlock: 5930020,
+    endBlock: 7658020,
+  },
+  {
+    address: "0xb627A7e33Db571bE792B0b69c5C2f5a8160d5500",
+    startBlock: 5930020,
+    endBlock: 7658020,
+  },
+  {
+    address: "0xadBfFA25594AF8Bc421ecaDF54D057236a99781e",
+    startBlock: 5924630,
+    endBlock: 7652630,
+  },
+  {
     address: "0x3e31488f08EBcE6F2D8a2AA512aeFa49a3C7dFa7",
     startBlock: 5896800,
     endBlock: 7624800,

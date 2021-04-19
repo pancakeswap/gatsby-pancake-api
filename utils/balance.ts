@@ -77,10 +77,10 @@ export const getTotalStaked = async (address: string, block: string): Promise<nu
       new BigNumber(0)
     );
 
-    return balance.plus(balancesMapping).div(1e18).toNumber();
+    balance = balance.plus(balancesMapping);
   } catch (error) {
     console.error(`Pools error: ${error}`);
   }
 
-  return balance.toNumber();
+  return balance.div(1e18).toNumber();
 };
