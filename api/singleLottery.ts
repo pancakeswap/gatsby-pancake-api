@@ -1,4 +1,5 @@
 import { NowRequest, NowResponse } from "@vercel/node";
+import BigNumber from "bignumber.js";
 import { generateLotteryDate } from "../utils/generateLotteryDate";
 import { getIssueIndex, getRates, getSingleLotteryBatch, getTicketPrice, SingleLottery } from "../utils/lotteryUtils";
 import { ceilDecimal } from "../utils/mathUtils";
@@ -29,7 +30,7 @@ export const lottery = async (
   const { numbers1: numbers1Prom, numbers2: numbers2Prom } = getSingleLotteryBatch(lotteryNumber);
   const numbers1 = await numbers1Prom;
   const numbers2Res = await numbers2Prom;
-  const numbers2: Array<number> = numbers2Res.map((n) => parseInt(n) / 1e18);
+  const numbers2: Array<number> = numbers2Res.map((n) => new BigNumber(n).div(1e18).toNumber());
 
   const lotteryDate = generateLotteryDate(lotteryNumber);
   const ratesToUse = getRates(lotteryNumber);
