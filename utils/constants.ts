@@ -17,3 +17,5 @@ export const WBNB_TOKEN = new Token(ChainId.MAINNET, WBNB, 18);
 export const CAKE_BNB_TOKEN = new Token(ChainId.MAINNET, CAKE_BNB_FARM, 18);
 
 export const LOCKED_CAKE_POOL = "0x45c54210128a065de780C4B0Df3d16664f7f859e";
+
+export const VECAKE = "0x5692DB8177a81A6c6afc8084C2976C9933EC1bAB";
