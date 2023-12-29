@@ -34,4 +34,4 @@ export const getLockedCake = async (): Promise<BigNumber> => {
  */
 export const planetFinanceBurnedTokensWei = new BigNumber("637407922445268000000000");
 
-export const maxSupply = 750000000;
+export const maxSupply = 450000000;
