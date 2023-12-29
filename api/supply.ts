@@ -5,6 +5,7 @@ import {
   getTotalSupply,
   planetFinanceBurnedTokensWei,
   maxSupply,
+  getVeCakeLocked,
 } from "../utils/supply";
 import formatNumber from "../utils/formatNumber";
 import BigNumber from "bignumber.js";
@@ -16,8 +17,13 @@ export default async (req: NowRequest, res: NowResponse): Promise<void> => {
   let burnedSupply = await getBurnedSupply();
   burnedSupply = burnedSupply.div(1e18);
 
-  let lockedCake = await getLockedCake();
-  lockedCake = lockedCake.div(1e18);
+  let lockedCakePool = await getLockedCake();
+  lockedCakePool = lockedCakePool.div(1e18);
+
+  let lockedVeCake = await getVeCakeLocked();
+  lockedVeCake = lockedVeCake.div(1e18);
+
+  let lockedCake = lockedCakePool.plus(lockedVeCake);
 
   const planetFinanceBurnedTokens = planetFinanceBurnedTokensWei.div(1e18);
 

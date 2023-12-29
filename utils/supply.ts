@@ -1,6 +1,6 @@
 import BigNumber from "bignumber.js";
 import { getContract } from "./web3";
-import { CAKE, DEAD, LOCKED_CAKE_POOL } from "./constants";
+import { CAKE, DEAD, LOCKED_CAKE_POOL, VECAKE } from "./constants";
 import bep20 from "./abis/bep20.json";
 import lockedCakePool from "./abis/lockedCakePool.json";
 
@@ -22,6 +22,11 @@ export const getBurnedSupply = async (): Promise<BigNumber> => {
 export const getLockedCake = async (): Promise<BigNumber> => {
   const lockedAmount = await lockedCakePoolContract.methods.totalLockedAmount().call();
   return new BigNumber(lockedAmount);
+};
+
+export const getVeCakeLocked = async (): Promise<BigNumber> => {
+  const balance = await contract.methods.balanceOf(VECAKE).call();
+  return new BigNumber(balance);
 };
 
 /**
