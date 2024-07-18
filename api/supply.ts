@@ -1,21 +1,20 @@
 import { NowRequest, NowResponse } from "@vercel/node";
 import {
-  getBurnedSupply,
+  getDeadSupply,
   getLockedCake,
-  getTotalSupply,
+  getTotalMint,
   planetFinanceBurnedTokensWei,
   maxSupply,
   getVeCakeLocked,
 } from "../utils/supply";
 import formatNumber from "../utils/formatNumber";
-import BigNumber from "bignumber.js";
 
 export default async (req: NowRequest, res: NowResponse): Promise<void> => {
-  let totalSupply = await getTotalSupply();
-  totalSupply = totalSupply.div(1e18);
+  let totalMint = await getTotalMint();
+  totalMint = totalMint.div(1e18);
 
-  let burnedSupply = await getBurnedSupply();
-  burnedSupply = burnedSupply.div(1e18);
+  let deadSupply = await getDeadSupply();
+  deadSupply = deadSupply.div(1e18);
 
   let lockedCakePool = await getLockedCake();
   lockedCakePool = lockedCakePool.div(1e18);
@@ -23,34 +22,34 @@ export default async (req: NowRequest, res: NowResponse): Promise<void> => {
   let lockedVeCake = await getVeCakeLocked();
   lockedVeCake = lockedVeCake.div(1e18);
 
-  let lockedCake = lockedCakePool.plus(lockedVeCake);
+  let totalLockedCake = lockedCakePool.plus(lockedVeCake);
 
   const planetFinanceBurnedTokens = planetFinanceBurnedTokensWei.div(1e18);
 
-  const totalBurnedTokens = burnedSupply.plus(planetFinanceBurnedTokens);
+  const totalBurnedTokens = deadSupply.plus(planetFinanceBurnedTokens);
 
-  const burnedAndLockedTokens = totalBurnedTokens.plus(lockedCake);
+  const burnedAndLockedTokens = totalBurnedTokens.plus(totalLockedCake);
 
-  const unburntCake = totalSupply.minus(totalBurnedTokens);
+  const totalSupply = totalMint.minus(totalBurnedTokens);
 
-  const circulatingSupply = totalSupply.minus(burnedAndLockedTokens);
+  const circulatingSupply = totalMint.minus(burnedAndLockedTokens);
 
   if (req.query?.q === "totalSupply") {
-    res.json(unburntCake.toNumber());
+    res.json(totalSupply.toNumber());
   } else if (req.query?.q === "circulatingSupply") {
     res.json(circulatingSupply.toNumber());
   } else if (req.query?.verbose) {
     res.json({
-      totalMinted: formatNumber(totalSupply.toNumber()),
-      totalSupply: formatNumber(unburntCake.toNumber()),
-      burnedSupply: formatNumber(burnedSupply.toNumber()),
+      totalMinted: formatNumber(totalMint.toNumber()),
+      totalSupply: formatNumber(totalSupply.toNumber()),
+      burnedSupply: formatNumber(totalBurnedTokens.toNumber()),
       circulatingSupply: formatNumber(circulatingSupply.toNumber()),
-      lockedCake: formatNumber(lockedCake.toNumber()),
+      lockedCake: formatNumber(totalLockedCake.toNumber()),
       maxSupply: formatNumber(maxSupply),
     });
   } else {
     res.json({
-      totalSupply: unburntCake.toNumber(),
+      totalSupply: totalSupply.toNumber(),
       burnedSupply: totalBurnedTokens.toNumber(),
       circulatingSupply: circulatingSupply.toNumber(),
     });
