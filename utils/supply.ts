@@ -41,4 +41,19 @@ export const getVeCakeLocked = async (): Promise<BigNumber> => {
  */
 export const planetFinanceBurnedTokensWei = new BigNumber("637407922445268000000000");
 
+/**
+ * There are roughly 5.2 mil locked cake in CAKE pool that cannot be removed.
+ * These locked cake happened duee to user delegating from cake pool to either stake dao or cake pie delegators. (staked dao and cakepie)
+ *
+ * Delegator:
+ * - CakePie: 0xb47b790076050423888cde9EBB2D5Cb86544F327
+ * - StakedDao: 0x1E6F87A9ddF744aF31157d8DaA1e3025648d042d
+ *
+ * veCAKE: 0x5692DB8177a81A6c6afc8084C2976C9933EC1bAB
+ * event: DelegateFromCakePool
+ *
+ * @see https://dune.com/queries/4995421
+ */
+export const veCakeDelegatorsBurnedTokenWei = new BigNumber("5294001103223024000000000");
+
 export const maxSupply = 450000000;

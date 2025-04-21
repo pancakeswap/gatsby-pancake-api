@@ -4,6 +4,7 @@ import {
   getLockedCake,
   getTotalMint,
   planetFinanceBurnedTokensWei,
+  veCakeDelegatorsBurnedTokenWei,
   maxSupply,
   getVeCakeLocked,
 } from "../utils/supply";
@@ -17,7 +18,7 @@ export default async (req: NowRequest, res: NowResponse): Promise<void> => {
   deadSupply = deadSupply.div(1e18);
 
   let lockedCakePool = await getLockedCake();
-  lockedCakePool = lockedCakePool.div(1e18);
+  lockedCakePool = lockedCakePool.minus(veCakeDelegatorsBurnedTokenWei).div(1e18);
 
   let lockedVeCake = await getVeCakeLocked();
   lockedVeCake = lockedVeCake.div(1e18);
@@ -25,8 +26,9 @@ export default async (req: NowRequest, res: NowResponse): Promise<void> => {
   let totalLockedCake = lockedCakePool.plus(lockedVeCake);
 
   const planetFinanceBurnedTokens = planetFinanceBurnedTokensWei.div(1e18);
+  const veCakeDelegatorsBurnedToken = veCakeDelegatorsBurnedTokenWei.div(1e18);
 
-  const totalBurnedTokens = deadSupply.plus(planetFinanceBurnedTokens);
+  const totalBurnedTokens = deadSupply.plus(planetFinanceBurnedTokens).plus(veCakeDelegatorsBurnedToken);
 
   const burnedAndLockedTokens = totalBurnedTokens.plus(totalLockedCake);
 
