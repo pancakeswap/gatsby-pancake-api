@@ -1,6 +1,6 @@
 import BigNumber from "bignumber.js";
 import { getContract } from "./web3";
-import { CAKE, DEAD, LOCKED_CAKE_POOL, VECAKE } from "./constants";
+import { CAKE, DEAD, LOCKED_CAKE_POOL, VECAKE, MASTERCHEF_V1 } from "./constants";
 import bep20 from "./abis/bep20.json";
 import lockedCakePool from "./abis/lockedCakePool.json";
 import veCake from "./abis/veCake.json";
@@ -21,13 +21,27 @@ export const getDeadSupply = async (): Promise<BigNumber> => {
   return new BigNumber(balance);
 };
 
-export const getLockedCake = async (): Promise<BigNumber> => {
-  const lockedAmount = await lockedCakePoolContract.methods.totalLockedAmount().call();
-  return new BigNumber(lockedAmount);
+/**
+ * Full CAKE balance held in the CakePool contract, not just the time-locked portion.
+ * This aligns with the Dune methodology which deducts all CAKE sitting in pool contracts.
+ */
+export const getCakePoolBalance = async (): Promise<BigNumber> => {
+  const balance = await cakeContract.methods.balanceOf(LOCKED_CAKE_POOL).call();
+  return new BigNumber(balance);
 };
 
 export const getVeCakeLocked = async (): Promise<BigNumber> => {
   const balance = await veCakeContract.methods.supply().call();
+  return new BigNumber(balance);
+};
+
+/**
+ * CAKE held in MasterChef V1. Emissions are stopped (cakePerBlock=0) and the tokens
+ * are effectively stuck — Old CakeVault (~5M), Beefy (~467K), and other legacy depositors.
+ * @see https://bscscan.com/address/0x73feaa1eE314F8c655E354234017bE2193C9E24E
+ */
+export const getMasterChefV1Balance = async (): Promise<BigNumber> => {
+  const balance = await cakeContract.methods.balanceOf(MASTERCHEF_V1).call();
   return new BigNumber(balance);
 };
 
